@@ -269,7 +269,7 @@ Elong_Cent(linear_indices) = 1;
 
 % Count elongated adhesions per cell object
 COL = bwlabel(CellObjects);
-props = regionprops(COL, _Cent, 'Area', 'MeanIntensity');
+props = regionprops(COL, Elong_Cent, 'Area', 'MeanIntensity');
 NumElong = [props.Area].*[props.MeanIntensity];
 Hist = hist(NumElong, [0:20]);
 

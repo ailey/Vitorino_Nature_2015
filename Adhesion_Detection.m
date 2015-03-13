@@ -1,4 +1,3 @@
-
 function Adhesion_Detection(varargin) 
 %--------------------------------------------------------------------------
 % Adhesion_Detection.m
@@ -270,7 +269,7 @@ Elong_Cent(linear_indices) = 1;
 
 % Count elongated adhesions per cell object
 COL = bwlabel(CellObjects);
-props = regionprops(COL, Fib_Cent, 'Area', 'MeanIntensity');
+props = regionprops(COL, _Cent, 'Area', 'MeanIntensity');
 NumElong = [props.Area].*[props.MeanIntensity];
 Hist = hist(NumElong, [0:20]);
 
@@ -307,7 +306,7 @@ end
 cd(resdir)
 [cvf1] = fopen(savefile,'a+');
 fwrite(cvf1,sprintf('%s^%f^%f^%f^%f^%f^%f^%f^%f^%f^%f^%f^%f^%f^%f^%s\n', char(savename), ...
-    numElong, numAd, Cell_Area*PixA, Num_Nuc, MeanAdInt, MeanAdInt_mask, 100*Ad_Area / Cell_Area, 100*Fib_Area / Cell_Area, ...
+    numElong, numAd, Cell_Area*PixA, Num_Nuc, MeanAdInt, MeanAdInt_mask, 100*Ad_Area / Cell_Area, 100*Elong_Area / Cell_Area, ...
     nuElong / Num_Nuc, numElong / (Cell_Area*PixA), mean(Ad_MaL), ... %PLave, PLstd, ...
     numPPax/PixA, PPax_Area, PPax_Int, Histout));
 fclose(cvf1);
@@ -334,12 +333,12 @@ NucIm = imadjust(NucIm);
 Adim = imadjust(Adim);              % adjust contrast
 actim = imadjust(actim);
 
-outfilename = sprintf('%s_Fib_mask.tif', savename);
+outfilename = sprintf('%s_Elong_mask.tif', savename);
 temp_img = cat(3, im2uint8(Adim), uint8(Elong_perim).*100, uint8(Cperim | Nuc_perim).*100);
 Save_Image(temp_img, resdir, outfilename, 5e8);
 
 outfilename = sprintf('%s_Adhesion_mask.tif', savename);
-temp_img = cat(3, im2uint8(Adim), uint8(Fib_mask).*100, uint8(Ad_mask).*100);
+temp_img = cat(3, im2uint8(Adim), uint8(Elong_mask).*100, uint8(Ad_mask).*100);
 Save_Image(temp_img, resdir, outfilename, 5e8);
 
 % Save peripheral adhesion immask

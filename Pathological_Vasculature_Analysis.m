@@ -1,5 +1,5 @@
 function Pathological_Vasculature_Analysis(varargin) 
-% Loads DAP, MECA-32 green, SMA red, and CFP subtraction channels
+
 
 %checks for formatting of input arguments
  if(nargin<1)
